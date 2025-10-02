@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <img src={logo} alt="System Serwis - Rzetelna Firma" className="h-12 w-auto mb-4 brightness-0 invert" />
+            <img src={logo} alt="System Serwis - Rzetelna Firma" className="h-12 w-auto mb-4 " />
             <p className="text-background/70 text-sm leading-relaxed">
               Profesjonalna firma sprzątająca w Warszawie z ponad 20-letnim doświadczeniem. 
               Kompleksowe usługi sprzątania biur, biurowców i powierzchni komercyjnych.
