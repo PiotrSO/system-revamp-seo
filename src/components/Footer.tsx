@@ -1,3 +1,5 @@
+import logo from "@/assets/logo.png";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -13,15 +15,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-bold">
-                SS
-              </div>
-              <div>
-                <div className="font-bold text-lg">SYSTEM SERWIS</div>
-                <div className="text-xs text-background/70">Firma Sprzątająca</div>
-              </div>
-            </div>
+            <img src={logo} alt="System Serwis - Rzetelna Firma" className="h-12 w-auto mb-4 brightness-0 invert" />
             <p className="text-background/70 text-sm leading-relaxed">
               Profesjonalna firma sprzątająca w Warszawie z ponad 20-letnim doświadczeniem. 
               Kompleksowe usługi sprzątania biur, biurowców i powierzchni komercyjnych.

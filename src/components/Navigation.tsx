@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,15 +31,7 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-bold text-lg">
-              SS
-            </div>
-            <div>
-              <div className="font-bold text-lg text-foreground">SYSTEM SERWIS</div>
-              <div className="text-xs text-muted-foreground">Firma Sprzątająca</div>
-            </div>
-          </div>
+          <img src={logo} alt="System Serwis - Rzetelna Firma" className="h-12 md:h-14 w-auto" />
 
           <div className="hidden md:flex items-center space-x-8">
             <button onClick={() => scrollToSection("o-nas")} className="text-foreground hover:text-primary transition-colors">
