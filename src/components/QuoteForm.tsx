@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   firstName: z
@@ -99,7 +100,7 @@ export const QuoteForm = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full bg-primary hover:bg-primary/90">
+        <Button variant="destructive" className="w-full">
           <FileText className="w-4 h-4 mr-2" />
           Zamów wstępną wycenę
         </Button>
@@ -192,14 +193,12 @@ export const QuoteForm = () => {
                   <div className="space-y-1 leading-none">
                     <FormLabel className="text-sm font-normal">
                       Wyrażam zgodę na przetwarzanie danych osobowych zgodnie z{" "}
-                      <a
-                        href="https://system-serwis.eu/polityka-prywatnosci/"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Link
+                        to="/polityka-prywatnosci"
                         className="text-primary underline hover:text-primary/80"
                       >
                         polityką prywatności
-                      </a>
+                      </Link>
                     </FormLabel>
                     <FormMessage />
                   </div>
