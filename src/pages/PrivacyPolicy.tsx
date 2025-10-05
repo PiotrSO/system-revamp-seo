@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Administratorem danych osobowych jest System Serwis Sp. z o.o. z siedzibą w Krakowie.
+                Administratorem danych osobowych jest System Serwis Sp. z o.o. z siedzibą przy ulicy Puławskiej 303, 02-785 Warszawa, NIP 9512129167.
               </p>
             </CardContent>
           </Card>
