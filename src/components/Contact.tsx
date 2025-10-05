@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { QuoteForm } from "./QuoteForm";
 
 const Contact = () => {
   const contactInfo = [
@@ -120,19 +121,22 @@ const Contact = () => {
                   <p className="text-muted-foreground mb-6">
                     Skontaktuj się z nami telefonicznie lub mailowo, aby otrzymać bezpłatną wycenę dostosowaną do Twoich potrzeb.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button asChild className="flex-1 bg-primary hover:bg-primary/90">
-                      <a href="tel:+48225494080">
-                        <Phone className="w-4 h-4 mr-2" />
-                        Zadzwoń
-                      </a>
-                    </Button>
-                    <Button asChild variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10">
-                      <a href="mailto:biuro@system-serwis.eu">
-                        <Mail className="w-4 h-4 mr-2" />
-                        Napisz
-                      </a>
-                    </Button>
+                  <div className="space-y-3">
+                    <QuoteForm />
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <Button asChild className="flex-1 bg-primary hover:bg-primary/90">
+                        <a href="tel:+48225494080">
+                          <Phone className="w-4 h-4 mr-2" />
+                          Zadzwoń
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10">
+                        <a href="mailto:biuro@system-serwis.eu">
+                          <Mail className="w-4 h-4 mr-2" />
+                          Napisz
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
