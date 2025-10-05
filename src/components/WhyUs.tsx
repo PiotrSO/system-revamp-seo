@@ -10,7 +10,7 @@ const WhyUs = () => {
     {
       icon: Users,
       title: "Zaufana kadra pracownicza",
-      description: "Jesteśmy wiarygodni i uczciwi. Pracuje dla nas zespół pracowników od lat związany z naszą firmą. Ręczymy za ich sprawiedliwość."
+      description: "Jesteśmy wiarygodni i uczciwi. Pracuje dla nas zespół pracowników od lat związany z naszą firmą. Ręczymy za ich rzetelność."
     },
     {
       icon: Sparkles,

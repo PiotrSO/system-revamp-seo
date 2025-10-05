@@ -25,8 +25,8 @@ const Contact = () => {
     },
     {
       icon: Clock,
-      title: "Godziny pracy",
-      content: "Pn-Pt: 8:00 - 18:00",
+      title: "Godziny pracy biura",
+      content: "Pn-Pt: 8:00 - 15:00",
       link: null
     }
   ];
