@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { FileText } from "lucide-react";
 
@@ -39,6 +40,21 @@ const formSchema = z.object({
     .trim()
     .min(2, { message: "Nazwa firmy musi mieć minimum 2 znaki" })
     .max(100, { message: "Nazwa firmy może mieć maksymalnie 100 znaków" }),
+  phone: z
+    .string()
+    .trim()
+    .min(9, { message: "Numer telefonu musi mieć minimum 9 cyfr" })
+    .max(15, { message: "Numer telefonu może mieć maksymalnie 15 znaków" }),
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Nieprawidłowy adres e-mail" })
+    .max(255, { message: "E-mail może mieć maksymalnie 255 znaków" }),
+  consent: z
+    .boolean()
+    .refine((val) => val === true, {
+      message: "Musisz wyrazić zgodę na przetwarzanie danych osobowych",
+    }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -53,6 +69,9 @@ export const QuoteForm = () => {
       firstName: "",
       lastName: "",
       companyName: "",
+      phone: "",
+      email: "",
+      consent: false,
     },
   });
 
@@ -60,7 +79,7 @@ export const QuoteForm = () => {
     // Create mailto link with form data
     const subject = encodeURIComponent("Zapytanie o wycenę");
     const body = encodeURIComponent(
-      `Dzień dobry,\n\nProszę o przygotowanie wyceny.\n\nDane kontaktowe:\nImię: ${data.firstName}\nNazwisko: ${data.lastName}\nNazwa firmy: ${data.companyName}\n\nPozdrawiam`
+      `Dzień dobry,\n\nProszę o przygotowanie wyceny.\n\nDane kontaktowe:\nImię: ${data.firstName}\nNazwisko: ${data.lastName}\nNazwa firmy: ${data.companyName}\nTelefon: ${data.phone}\nE-mail: ${data.email}\n\nPozdrawiam`
     );
     
     window.location.href = `mailto:biuro@system-serwis.eu?subject=${subject}&body=${body}`;
@@ -72,6 +91,9 @@ export const QuoteForm = () => {
     
     setOpen(false);
     form.reset();
+    
+    // Return to home page (scroll to top)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -127,6 +149,60 @@ export const QuoteForm = () => {
                     <Input placeholder="Wprowadź nazwę firmy" {...field} />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Telefon</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Wprowadź numer telefonu" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>E-mail</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="Wprowadź adres e-mail" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="consent"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel className="text-sm font-normal">
+                      Wyrażam zgodę na przetwarzanie danych osobowych zgodnie z{" "}
+                      <a
+                        href="https://system-serwis.eu/polityka-prywatnosci/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary underline hover:text-primary/80"
+                      >
+                        polityką prywatności
+                      </a>
+                    </FormLabel>
+                    <FormMessage />
+                  </div>
                 </FormItem>
               )}
             />
