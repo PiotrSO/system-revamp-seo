@@ -39,16 +39,13 @@ const Clients = () => {
           {clients.map((client, index) => (
             <div
               key={index}
-              className="flex flex-col items-center gap-3 group"
+              className="transition-all duration-300 hover:scale-110"
             >
               <img 
                 src={client.logo} 
                 alt={`${client.name} logo`}
-                className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
+                className="h-12 md:h-16 w-auto object-contain"
               />
-              <span className="text-muted-foreground group-hover:text-foreground transition-colors font-semibold text-sm md:text-base">
-                {client.name}
-              </span>
             </div>
           ))}
         </div>
