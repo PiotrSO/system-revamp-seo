@@ -1,7 +1,26 @@
+import deloitteLogo from "@/assets/clients/deloitte.png";
+import allianzLogo from "@/assets/clients/allianz.png";
+import pkoLogo from "@/assets/clients/pko.jpg";
+import mediaSaturnLogo from "@/assets/clients/media-saturn.png";
+import multimediaPolskaLogo from "@/assets/clients/multimedia-polska.png";
+import bonduelleLogo from "@/assets/clients/bonduelle.png";
+import skfLogo from "@/assets/clients/skf.png";
+import premierResearchLogo from "@/assets/clients/premier-research.png";
+import aegonLogo from "@/assets/clients/aegon.png";
+import ceracoLogo from "@/assets/clients/ceraco.png";
+
 const Clients = () => {
   const clients = [
-    "Deloitte", "Allianz", "PKO Bank", "Media Saturn", "Multimedia Polska",
-    "Bonduelle", "SKF Group", "Premier Research", "AEGON", "Ceraco"
+    { name: "Deloitte", logo: deloitteLogo },
+    { name: "Allianz", logo: allianzLogo },
+    { name: "PKO Bank", logo: pkoLogo },
+    { name: "Media Saturn", logo: mediaSaturnLogo },
+    { name: "Multimedia Polska", logo: multimediaPolskaLogo },
+    { name: "Bonduelle", logo: bonduelleLogo },
+    { name: "SKF Group", logo: skfLogo },
+    { name: "Premier Research", logo: premierResearchLogo },
+    { name: "AEGON", logo: aegonLogo },
+    { name: "Ceraco", logo: ceracoLogo }
   ];
 
   return (
@@ -20,9 +39,16 @@ const Clients = () => {
           {clients.map((client, index) => (
             <div
               key={index}
-              className="text-muted-foreground hover:text-foreground transition-colors font-semibold text-sm md:text-base"
+              className="flex flex-col items-center gap-3 group"
             >
-              {client}
+              <img 
+                src={client.logo} 
+                alt={`${client.name} logo`}
+                className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100"
+              />
+              <span className="text-muted-foreground group-hover:text-foreground transition-colors font-semibold text-sm md:text-base">
+                {client.name}
+              </span>
             </div>
           ))}
         </div>
