@@ -43,7 +43,7 @@ const Clients = () => {
             let sizeClass = "h-12 md:h-16 w-auto object-contain";
             
             if (isAllianz) {
-              sizeClass = "h-22 md:h-31 w-auto object-contain";
+              sizeClass = "h-20 md:h-28 w-auto object-contain";
             } else if (isPKO) {
               sizeClass = "h-14 md:h-20 w-auto object-contain";
             } else if (isSmaller) {
