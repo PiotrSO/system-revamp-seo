@@ -36,18 +36,21 @@ const Clients = () => {
         </div>
         
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-          {clients.map((client, index) => (
-            <div
-              key={index}
-              className="transition-all duration-300 hover:scale-110"
-            >
-              <img 
-                src={client.logo} 
-                alt={`${client.name} logo`}
-                className="h-12 md:h-16 w-auto object-contain"
-              />
-            </div>
-          ))}
+          {clients.map((client, index) => {
+            const isLarger = client.name === "Allianz" || client.name === "PKO Bank";
+            return (
+              <div
+                key={index}
+                className="transition-all duration-300 hover:scale-110"
+              >
+                <img 
+                  src={client.logo} 
+                  alt={`${client.name} logo`}
+                  className={isLarger ? "h-14 md:h-20 w-auto object-contain" : "h-12 md:h-16 w-auto object-contain"}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
