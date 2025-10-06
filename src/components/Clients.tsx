@@ -37,7 +37,16 @@ const Clients = () => {
         
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
           {clients.map((client, index) => {
-            const isLarger = client.name === "Allianz" || client.name === "PKO Bank";
+            const isAllianz = client.name === "Allianz";
+            const isPKO = client.name === "PKO Bank";
+            let sizeClass = "h-12 md:h-16 w-auto object-contain";
+            
+            if (isAllianz) {
+              sizeClass = "h-20 md:h-28 w-auto object-contain";
+            } else if (isPKO) {
+              sizeClass = "h-14 md:h-20 w-auto object-contain";
+            }
+            
             return (
               <div
                 key={index}
@@ -46,7 +55,7 @@ const Clients = () => {
                 <img 
                   src={client.logo} 
                   alt={`${client.name} logo`}
-                  className={isLarger ? "h-14 md:h-20 w-auto object-contain" : "h-12 md:h-16 w-auto object-contain"}
+                  className={sizeClass}
                 />
               </div>
             );
