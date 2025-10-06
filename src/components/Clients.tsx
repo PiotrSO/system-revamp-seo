@@ -39,12 +39,15 @@ const Clients = () => {
           {clients.map((client, index) => {
             const isAllianz = client.name === "Allianz";
             const isPKO = client.name === "PKO Bank";
+            const isSmaller = client.name === "Deloitte" || client.name === "Media Saturn" || client.name === "Ceraco";
             let sizeClass = "h-12 md:h-16 w-auto object-contain";
             
             if (isAllianz) {
               sizeClass = "h-20 md:h-28 w-auto object-contain";
             } else if (isPKO) {
               sizeClass = "h-14 md:h-20 w-auto object-contain";
+            } else if (isSmaller) {
+              sizeClass = "h-10 md:h-13 w-auto object-contain";
             }
             
             return (
