@@ -24,7 +24,7 @@ const Hero = () => {
             Dbamy o czystość Twojego biura
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8">
-            Profesjonalna firma sprzątająca w Warszawie z ponad 20-letnim doświadczeniem
+            Profesjonalna firma sprzątająca w Warszawie z ponad 25-letnim doświadczeniem
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -49,7 +49,7 @@ const Hero = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex items-center space-x-3 text-primary-foreground">
               <CheckCircle className="w-6 h-6 flex-shrink-0" />
-              <span>Ponad 20 lat na rynku</span>
+              <span>Ponad 25 lat na rynku</span>
             </div>
             <div className="flex items-center space-x-3 text-primary-foreground">
               <CheckCircle className="w-6 h-6 flex-shrink-0" />
