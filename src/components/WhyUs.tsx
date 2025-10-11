@@ -4,7 +4,7 @@ const WhyUs = () => {
   const features = [
     {
       icon: Award,
-      title: "Ponad 20 lat na rynku",
+      title: "Ponad 25 lat na rynku",
       description: "Długoletnie doświadczenie, profesjonalizm i odpowiedzialność pozwoliły nam na zdobycie zaufania klientów na terenie całego kraju."
     },
     {
