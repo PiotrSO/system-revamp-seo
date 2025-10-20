@@ -76,25 +76,35 @@ export const QuoteForm = () => {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    // Create mailto link with form data
-    const subject = encodeURIComponent("Zapytanie o wycenę");
-    const body = encodeURIComponent(
-      `Dzień dobry,\n\nProszę o przygotowanie wyceny.\n\nDane kontaktowe:\nImię: ${data.firstName}\nNazwisko: ${data.lastName}\nNazwa firmy: ${data.companyName}\nTelefon: ${data.phone}\nE-mail: ${data.email}\n\nPozdrawiam`
-    );
-    
-    window.location.href = `mailto:biuro@system-serwis.eu?subject=${subject}&body=${body}`;
-    
-    toast({
-      title: "Przekierowanie do aplikacji email",
-      description: "Twoja aplikacja email zostanie otwarta z przygotowaną wiadomością.",
-    });
-    
-    setOpen(false);
-    form.reset();
-    
-    // Return to home page (scroll to top)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.message || "Błąd wysyłki");
+      }
+
+      toast({
+        title: "Wiadomość wysłana",
+        description: "Wiadomość została wysłana z adresu kontakt@saturdev.pl",
+      });
+
+      setOpen(false);
+      form.reset();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Błąd",
+        description: "Wystąpił problem podczas wysyłania wiadomości. Spróbuj później.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
