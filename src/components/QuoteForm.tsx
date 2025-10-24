@@ -78,7 +78,7 @@ export const QuoteForm = () => {
   const API_URL = (import.meta.env.VITE_API_URL as string) || "http://localhost:4000";
   const onSubmit = async (data: FormValues) => {
     try {
-      const res = await fetch("/api/send-email", {
+      const res = await fetch(`${API_URL}/api/send-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
