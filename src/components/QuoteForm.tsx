@@ -24,6 +24,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   firstName: z
@@ -75,30 +76,26 @@ export const QuoteForm = () => {
       consent: false,
     },
   });
-  const API_URL = (import.meta.env.VITE_API_URL as string) || "http://localhost:4000";
   const onSubmit = async (data: FormValues) => {
     try {
-      const res = await fetch(`${API_URL}/api/send-email`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const { data: response, error } = await supabase.functions.invoke('send-quote-email', {
+        body: data,
       });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err?.message || "Błąd wysyłki");
+      if (error) {
+        throw error;
       }
 
       toast({
         title: "Wiadomość wysłana",
-        description: "Wiadomość została wysłana z adresu kontakt@saturdev.pl",
+        description: "Twoje zapytanie zostało wysłane. Skontaktujemy się z Tobą wkrótce.",
       });
 
       setOpen(false);
       form.reset();
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
-      console.error(error);
+      console.error("Error sending quote:", error);
       toast({
         title: "Błąd",
         description: "Wystąpił problem podczas wysyłania wiadomości. Spróbuj później.",
