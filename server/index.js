@@ -1,82 +1,61 @@
+const path = require("path");
 const express = require("express");
 const nodemailer = require("nodemailer");
-const cors = require("cors");
-const path = require("path");
-// wczytaj .env niezależnie od cwd
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const app = express();
+
 app.use(express.json());
-app.use(cors()); // w dev dopuszczamy wszystkie originy; w produkcji ogranicz
 
-// pokaż podstawowe ustawienia (nie logujemy hasła)
-console.log("SMTP config:", {
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_SECURE,
-  user: process.env.SMTP_USER,
-});
-
-// transporter SMTP z env (timeouty ułatwiają debug)
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: process.env.SMTP_SECURE === "true",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-});
-
-// verify transporter on startup — jeśli błąd, zaloguj szczegóły
-transporter.verify()
-  .then(() => console.log("SMTP transporter verified"))
-  .catch((err) => {
-    console.error("SMTP transporter verification failed:", err && err.message);
-    console.error(err && err.stack);
-  });
-
-// healthcheck
-app.get("/health", (req, res) => res.json({ ok: true }));
-
+// POST /api/send-email
 app.post("/api/send-email", async (req, res) => {
   try {
-    const { firstName, lastName, companyName, phone, email } = req.body || {};
+    const { firstName, lastName, companyName, phone, email, consent } = req.body;
 
-    if (!firstName || !lastName || !phone || !email) {
-      return res.status(400).json({ ok: false, message: "Brak wymaganych pól" });
+    if (!consent) {
+      return res.status(400).json({ message: "Zgoda wymagana" });
     }
 
-    const text = `Zapytanie o wycenę
-
-Imię: ${firstName}
-Nazwisko: ${lastName}
-Nazwa firmy: ${companyName || "-"}
-Telefon: ${phone}
-E-mail: ${email}
-`;
-
-    const info = await transporter.sendMail({
-      from: `"System Serwis" <${process.env.CONTACT_EMAIL}>`,
-      to: process.env.TO_EMAIL || "biuro@system-serwis.eu",
-      replyTo: email,
-      subject: "Zapytanie o wycenę",
-      text,
-      html: `<pre>${text}</pre>`,
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: process.env.SMTP_SECURE === "true",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
     });
 
-    return res.json({ ok: true, messageId: info.messageId });
+    // opcjonalna weryfikacja połączenia (można zakomentować w produkcji)
+    // await transporter.verify();
+
+    const mailOptions = {
+      from: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
+      to: process.env.TO_EMAIL,
+      subject: `Nowe zapytanie: ${firstName} ${lastName}`,
+      text: `Imię: ${firstName}\nNazwisko: ${lastName}\nFirma: ${companyName}\nTelefon: ${phone}\nEmail: ${email}`,
+      html: `<p>Imię: ${firstName}</p><p>Nazwisko: ${lastName}</p><p>Firma: ${companyName}</p><p>Telefon: ${phone}</p><p>Email: ${email}</p>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return res.status(200).json({ ok: true });
   } catch (err) {
-    // log pełny błąd w konsoli (usuń szczegóły w produkcji)
-    console.error("send-email error:", err && err.message);
-    console.error(err && err.stack);
-    // w dev zwracamy message dla szybkiego debugu
-    const devError = process.env.NODE_ENV !== "production" ? (err && err.message) : undefined;
-    return res.status(500).json({ ok: false, message: "Błąd serwera", error: devError });
+    console.error("send-email error:", err);
+    return res.status(500).json({ message: "Błąd serwera" });
   }
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Email server running on ${PORT}`));
+// serwowanie statycznego buildu (dist w katalogu głównym projektu)
+const distPath = path.join(__dirname, "..", "dist");
+app.use(express.static(distPath));
+
+// fallback do index.html dla SPA
+app.get("*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
+});
+
+const PORT = Number(process.env.PORT || 4000);
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

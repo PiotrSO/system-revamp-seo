@@ -78,7 +78,12 @@ export const QuoteForm = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const res = await fetch("/api/send-email", {
+      // Use VITE_API_URL when provided (production); otherwise use relative path so /api works when
+      // frontend and backend are served from the same origin.
+      const apiBase = import.meta.env.VITE_API_URL ?? "";
+      const url = apiBase ? `${apiBase.replace(/\/$/, "")}/api/send-email.php` : "/api/send-email.php";
+
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
