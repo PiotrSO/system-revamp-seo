@@ -18,7 +18,7 @@ const Footer = () => {
             <h3 className="font-semibold text-lg mb-4">System Serwis</h3>
             <p className="text-white/80 text-sm leading-relaxed">
               
-              Profesjonalna firma sprzątająca w Warszawie z ponad 20-letnim doświadczeniem. 
+              Profesjonalna firma sprzątająca w Warszawie z ponad 25-letnim doświadczeniem. 
               Kompleksowe usługi sprzątania biur, biurowców i powierzchni komercyjnych.
             </p>
           </div>
