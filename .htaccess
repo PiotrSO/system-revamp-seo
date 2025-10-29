@@ -1,0 +1,15 @@
+# Włącz silnik przepisywania
+RewriteEngine On
+RewriteBase /
+
+# Logowanie (opcjonalne - do debugowania)
+# RewriteLog "/tmp/rewrite.log"
+# RewriteLogLevel 3
+
+# API: przekieruj /api/send-email na api/send-email.php
+RewriteRule ^api/send-email$ api/send-email.php [L,QSA]
+
+# SPA: przekieruj wszystko inne na index.html (z wyjątkiem istniejących plików)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.html [L]
